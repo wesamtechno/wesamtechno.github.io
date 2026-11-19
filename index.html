@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Weso Live Studio | استوديو لايف تيك توك</title>
+<meta name="description" content="برنامج عربي لصناع محتوى تيك توك لايف: أليرتات بتشتغل من جهازك من غير نت، ولوحة جانبية، وتحديات بالهدايا، ومتوصل بـ OBS. جرّبه مجانًا 14 يوم.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Tajawal:wght@700;900&display=swap">
+<script>
+  /* =============================================================
+     ✏️ عدّل هنا بس (البيانات دي بتتعرض في الصفحة)
+     ============================================================= */
+  const SITE = {
+    whatsapp: '201095118181',           // رقمك بالصيغة الدولية من غير + (مثلًا 201012345678)
+    instapay: 'wesocib@instapay',       // عنوان إنستاباي
+    wallet: '01095118181',              // رقم المحفظة (فودافون كاش مثلًا)
+    walletName: 'فودافون كاش',
+    supportLink: 'https://tikalert-eg.com/wes0gaming', // لينك الدعم بتاعك (لو فاضي ما يظهرش)
+    downloadUrl: '#',                   // رابط تحميل البرنامج (هنحطه بعدين من GitHub Releases)
+    prices: { month: 200, quarter: 500, year: 1500, launchYear: 1000, launchLeft: 'أول 100 مشترك' }
+  };
+</script>
+<style>
+/* الفكرة: غرفة تحكم بث. موبايل عليه لايف شغال والطبقات بتاعة البرنامج بتشتغل عليه قدامك. */
+:root {
+  --bg: #07080c; --bg2: #0c0d13; --panel: #11121a; --panel2: #161722; --line: #23253a; --line2: #2f3250;
+  --ink: #eef0f6; --ink2: #c3c6d6; --muted: #8a8ea6;
+  --violet: #7c6cff; --violet2: #b4aaff; --red: #ff3352; --blue: #2b7bff; --green: #34d399; --gold: #ffcc4d; --onair: #ff2d4a;
+  --ui: 'IBM Plex Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
+  --display: 'Tajawal', 'IBM Plex Sans Arabic', 'Segoe UI', sans-serif;
+  --mono: 'Consolas', 'SFMono-Regular', monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--ui); font-size: 16px; line-height: 1.75; -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+img, svg { max-width: 100%; }
+.wrap { max-width: 1140px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+section { padding-block: 96px; position: relative; }
+h1, h2, h3 { margin: 0; line-height: 1.2; text-wrap: balance; }
+h2 { font-family: var(--display); font-weight: 900; font-size: clamp(30px, 4.4vw, 48px); letter-spacing: -.01em; }
+p { margin: 0; }
+.kicker { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12px; letter-spacing: .18em; color: var(--violet2); text-transform: uppercase; direction: ltr; }
+.kicker::before { content: ""; width: 22px; height: 1px; background: currentColor; }
+.sec-head { display: grid; gap: 14px; max-width: 720px; margin-bottom: 44px; }
+.sec-head p { color: var(--ink2); font-size: 18px; max-width: 58ch; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font: inherit; font-weight: 700; text-decoration: none; padding: 14px 24px; border-radius: 14px; border: 1px solid var(--line2); background: var(--panel); color: var(--ink); cursor: pointer; transition: transform .15s, box-shadow .15s, background .15s; }
+.btn:hover { transform: translateY(-2px); }
+.btn.primary { background: var(--violet); border-color: transparent; color: #fff; box-shadow: 0 14px 40px -14px rgba(124,108,255,.9), inset 0 1px 0 rgba(255,255,255,.25); }
+.btn.wa { background: #19a14c; border-color: transparent; color: #fff; }
+.btn:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.btn svg { width: 18px; height: 18px; }
+
+/* ===== nav ===== */
+nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: rgba(7,8,12,.78); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255,255,255,.06); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 51; background: var(--bg); }
+nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 66px; }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--display); font-weight: 900; font-size: 19px; }
+.logo .mark { width: 30px; height: 30px; border-radius: 9px; background: conic-gradient(from 200deg, var(--red), var(--violet), var(--blue), var(--red)); display: grid; place-items: center; }
+.logo .mark::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #fff; box-shadow: 0 0 12px #fff; }
+.logo small { color: var(--muted); font-family: var(--ui); font-weight: 500; font-size: 13px; }
+nav .links { display: flex; gap: 22px; font-size: 15px; }
+nav .links a { text-decoration: none; color: var(--muted); transition: color .15s; }
+nav .links a:hover { color: var(--ink); }
+nav .btn { padding: 9px 16px; border-radius: 11px; font-size: 14px; }
+@media (max-width: 760px) { nav .links { display: none; } }
+nav .btn { white-space: nowrap; }
+@media (max-width: 480px) { .logo small { display: none; } .logo { font-size: 17px; } }
+
+/* ===== hero ===== */
+.hero { padding-block: 70px 90px; overflow: hidden; }
+.hero::before { content: ""; position: absolute; inset: -20% -10% auto; height: 120%; z-index: -1; pointer-events: none;
+  background: radial-gradient(600px 420px at 22% 38%, rgba(124,108,255,.22), transparent 70%), radial-gradient(520px 380px at 12% 70%, rgba(255,51,82,.14), transparent 70%), radial-gradient(520px 380px at 34% 20%, rgba(43,123,255,.14), transparent 70%); }
+.hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
+@media (max-width: 940px) { .hero-grid { grid-template-columns: 1fr; gap: 48px; } }
+.onair { display: inline-flex; align-items: center; gap: 10px; padding: 6px 14px 6px 12px; border-radius: 99px; border: 1px solid rgba(255,45,74,.45); background: rgba(255,45,74,.1); font-family: var(--mono); font-size: 12px; letter-spacing: .16em; color: #ff9aa8; direction: ltr; }
+.onair i { width: 9px; height: 9px; border-radius: 50%; background: var(--onair); box-shadow: 0 0 0 0 rgba(255,45,74,.7); animation: tally 1.6s infinite; }
+@keyframes tally { 0% { box-shadow: 0 0 0 0 rgba(255,45,74,.7); } 70% { box-shadow: 0 0 0 10px rgba(255,45,74,0); } 100% { box-shadow: 0 0 0 0 rgba(255,45,74,0); } }
+.hero h1 { font-family: var(--display); font-weight: 900; font-size: clamp(40px, 6.2vw, 76px); line-height: 1.08; margin-top: 22px; letter-spacing: -.015em; }
+.hero h1 .grad { background: linear-gradient(100deg, var(--red) 0%, var(--violet) 50%, var(--blue) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero .lede { font-size: 19px; color: var(--ink2); margin-top: 22px; max-width: 48ch; }
+.hero .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+.hero .note { margin-top: 16px; color: var(--muted); font-size: 14px; display: flex; gap: 18px; flex-wrap: wrap; }
+.hero .note span { display: inline-flex; align-items: center; gap: 6px; }
+.hero .note svg { width: 16px; height: 16px; color: var(--green); }
+
+/* الموبايل اللي عليه اللايف */
+.studio { position: relative; display: grid; place-items: center; min-height: 600px; }
+.phone { position: relative; width: 300px; aspect-ratio: 9 / 19.2; border-radius: 44px; padding: 12px; background: linear-gradient(160deg, #2a2c3d, #101119 40%, #1d1f2c); box-shadow: 0 50px 100px -30px rgba(0,0,0,.9), 0 0 0 1px rgba(255,255,255,.08), inset 0 0 0 2px #05060a; }
+.screen { position: relative; width: 100%; height: 100%; border-radius: 34px; overflow: hidden; container-type: inline-size; background: #05060a; }
+.game { position: absolute; inset: 0; background:
+  radial-gradient(120% 60% at 50% 110%, #2a1840 0%, transparent 60%),
+  linear-gradient(180deg, #0d1630 0%, #1a1238 45%, #2b1236 75%, #120a1c 100%); }
+.game::before { content: ""; position: absolute; inset: 0; background:
+  repeating-linear-gradient(100deg, transparent 0 40px, rgba(255,255,255,.035) 40px 42px),
+  radial-gradient(40% 25% at 70% 30%, rgba(255,140,90,.35), transparent 70%); animation: drift 9s linear infinite; }
+.game::after { content: ""; position: absolute; left: -10%; right: -10%; bottom: 18%; height: 40%; background: linear-gradient(180deg, transparent, rgba(0,0,0,.6)), repeating-linear-gradient(90deg, #1b0f2a 0 22px, #241536 22px 30px); clip-path: polygon(0 60%, 12% 40%, 22% 55%, 35% 30%, 48% 52%, 60% 35%, 74% 58%, 86% 38%, 100% 50%, 100% 100%, 0 100%); opacity: .9; }
+@keyframes drift { to { background-position: 120px 0, 0 0; } }
+.notch { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 34%; height: 22px; border-radius: 99px; background: #000; z-index: 9; }
+.ov { position: absolute; z-index: 5; }
+.live-top { top: 40px; inset-inline: 12px; display: flex; justify-content: space-between; align-items: center; direction: ltr; }
+.pill { display: inline-flex; align-items: center; gap: 6px; font: 700 11px/1 var(--ui); padding: 5px 9px; border-radius: 8px; }
+.pill.live { background: var(--onair); color: #fff; letter-spacing: .06em; }
+.pill.view { background: rgba(0,0,0,.45); color: #fff; }
+.pill.view svg { width: 12px; height: 12px; }
+/* تحدي الفرق على الموبايل */
+.mb { top: 74px; inset-inline: 12px; }
+.mb .clock { display: block; width: fit-content; margin: 0 auto 6px; font: 900 13px/1 var(--display); background: rgba(8,9,14,.85); border: 2px solid #fff; border-radius: 99px; padding: 5px 10px 3px; direction: ltr; }
+.mb .bar { position: relative; height: 22px; display: flex; border-radius: 99px; }
+.mb .ba { flex-basis: 50%; background: linear-gradient(90deg, #ff9a6b, var(--red)); border-radius: 0 99px 99px 0; display: flex; align-items: center; padding-right: 8px; font: 900 12px/1 var(--display); transition: flex-basis .5s cubic-bezier(.2,.9,.3,1.2); }
+.mb .bb { flex: 1; background: linear-gradient(90deg, var(--blue), #6ff0ff); border-radius: 99px 0 0 99px; display: flex; align-items: center; justify-content: flex-end; padding-left: 8px; font: 900 12px/1 var(--display); }
+.mb .seam { position: absolute; top: 50%; width: 0; transition: right .5s cubic-bezier(.2,.9,.3,1.2); }
+.mb .fist { position: absolute; top: -15px; width: 40px; height: 30px; filter: drop-shadow(0 0 1px #fff) drop-shadow(0 2px 3px rgba(0,0,0,.6)); }
+.mb .fa { left: -6px; color: #ff8495; animation: ja 1.2s ease-in-out infinite; } .mb .fa svg { transform: scaleX(-1); }
+.mb .fb { right: -6px; color: #77aeff; animation: jb 1.2s ease-in-out infinite; animation-delay: -.6s; }
+.mb svg { width: 100%; height: 100%; display: block; overflow: visible; }
+@keyframes ja { 0%,100% { transform: translateX(6px) rotate(4deg); } 45% { transform: translateX(-1px); } }
+@keyframes jb { 0%,100% { transform: translateX(-6px) rotate(-4deg); } 45% { transform: translateX(1px); } }
+.mb .teams { display: flex; justify-content: space-between; margin-top: 6px; font: 900 11px/1 var(--display); }
+.mb .teams span:first-child { color: #ffc1cb; } .mb .teams span:last-child { color: #c3dbff; }
+/* الأليرت */
+.alert { top: 34%; inset-inline: 14px; display: grid; justify-items: center; gap: 6px; opacity: 0; transform: translateY(16px) scale(.9); transition: opacity .35s, transform .45s cubic-bezier(.2,.9,.3,1.3); }
+.alert.show { opacity: 1; transform: none; }
+.alert .burst { width: 92px; height: 92px; display: grid; place-items: center; border-radius: 50%; background: radial-gradient(circle, rgba(255,204,77,.5), transparent 65%); }
+.alert .burst svg { width: 62px; height: 62px; animation: bob 1.4s ease-in-out infinite; }
+@keyframes bob { 50% { transform: translateY(-6px) rotate(-6deg); } }
+.alert .name { font: 900 17px/1.2 var(--display); text-align: center; text-shadow: 0 2px 10px rgba(0,0,0,.8); }
+.alert .name b { color: var(--gold); }
+.alert .sub { font: 700 11px/1 var(--ui); padding: 4px 10px; border-radius: 99px; background: rgba(0,0,0,.55); color: #ffe6a6; }
+/* قلوب */
+.hearts { bottom: 90px; right: 10px; width: 50px; height: 260px; pointer-events: none; }
+.hearts span { position: absolute; bottom: 0; right: 10px; width: 18px; height: 18px; animation: rise 3.2s ease-out forwards; opacity: 0; }
+@keyframes rise { 0% { opacity: 0; transform: translate(0,0) scale(.5); } 15% { opacity: 1; } 100% { opacity: 0; transform: translate(var(--dx), -240px) scale(1.15); } }
+/* شات */
+.chat { bottom: 66px; inset-inline-start: 12px; width: 70%; display: grid; gap: 5px; }
+.chat div { font: 500 11.5px/1.35 var(--ui); background: rgba(0,0,0,.42); border-radius: 10px; padding: 5px 9px; width: fit-content; max-width: 100%; animation: msg .4s ease-out; }
+.chat b { color: #9fd0ff; font-weight: 700; margin-inline-end: 4px; }
+@keyframes msg { from { opacity: 0; transform: translateY(8px); } }
+.bottom-bar { bottom: 16px; inset-inline: 12px; display: flex; gap: 8px; align-items: center; }
+.bottom-bar .say { flex: 1; height: 34px; border-radius: 99px; background: rgba(255,255,255,.12); font-size: 11px; color: rgba(255,255,255,.6); display: flex; align-items: center; padding-inline: 12px; }
+.bottom-bar i { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.12); display: grid; place-items: center; }
+.bottom-bar svg { width: 16px; height: 16px; color: #fff; }
+.plus { position: absolute; z-index: 6; font: 900 22px/1 var(--display); color: #fff; text-shadow: 0 0 12px var(--gold); animation: plus 1.2s ease-out forwards; pointer-events: none; direction: ltr; }
+@keyframes plus { 0% { opacity: 0; transform: translateY(10px) scale(.6); } 25% { opacity: 1; transform: translateY(0) scale(1.15); } 100% { opacity: 0; transform: translateY(-50px); } }
+/* البطاقات اللي بتشرح الطبقات حوالين الموبايل */
+.callout { position: absolute; z-index: 10; display: flex; align-items: center; gap: 10px; padding: 9px 14px; border-radius: 14px; background: rgba(17,18,26,.88); backdrop-filter: blur(10px); border: 1px solid var(--line2); font-size: 13.5px; font-weight: 600; white-space: nowrap; box-shadow: 0 18px 40px -20px rgba(0,0,0,.9); animation: float 6s ease-in-out infinite; }
+.callout i { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; flex: none; }
+.callout i svg { width: 17px; height: 17px; }
+.callout small { display: block; color: var(--muted); font-weight: 500; font-size: 11.5px; }
+.c1 { top: 70px; right: -6px; animation-delay: -1s; } .c1 i { background: rgba(255,51,82,.16); color: #ff8495; }
+.c2 { top: 46%; left: -16px; animation-delay: -3s; } .c2 i { background: rgba(255,204,77,.16); color: var(--gold); }
+.c3 { bottom: 120px; right: -26px; animation-delay: -2s; } .c3 i { background: rgba(255,94,150,.16); color: #ff86b4; }
+.c4 { bottom: 34px; left: 0; animation-delay: -4s; } .c4 i { background: rgba(52,211,153,.16); color: var(--green); }
+@keyframes float { 50% { transform: translateY(-8px); } }
+@media (max-width: 520px) { .callout { display: none; } .studio { min-height: 0; } .phone { width: 270px; } }
+
+/* شريط الثقة */
+.strip { border-block: 1px solid var(--line); background: var(--bg2); }
+.strip .wrap { display: grid; grid-template-columns: repeat(4, 1fr); }
+.strip .cell { padding: 22px 18px; display: grid; gap: 2px; }
+.strip .cell + .cell { border-inline-start: 1px solid var(--line); }
+.strip b { font: 900 30px/1.1 var(--display); direction: ltr; text-align: right; }
+.strip span { color: var(--muted); font-size: 14px; }
+@media (max-width: 760px) { .strip .wrap { grid-template-columns: 1fr 1fr; } .strip .cell:nth-child(3) { border-inline-start: 0; } .strip .cell:nth-child(n+3) { border-top: 1px solid var(--line); } }
+
+/* ===== من جهازك ===== */
+#local { overflow: hidden; }
+#local::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(700px 400px at 85% 10%, rgba(52,211,153,.10), transparent 70%); }
+.local-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+@media (max-width: 940px) { .local-grid { grid-template-columns: 1fr; } }
+.local-grid h2 em { font-style: normal; color: var(--green); }
+.points { display: grid; gap: 22px; margin-top: 30px; }
+.point { display: grid; grid-template-columns: 46px 1fr; gap: 16px; align-items: start; }
+.point i { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; background: rgba(52,211,153,.12); color: var(--green); border: 1px solid rgba(52,211,153,.3); }
+.point i svg { width: 22px; height: 22px; }
+.point h3 { font-size: 18px; margin-bottom: 4px; }
+.point p { color: var(--ink2); font-size: 15.5px; }
+/* مسار الإشارة */
+.path { background: var(--panel); border: 1px solid var(--line); border-radius: 24px; padding: 28px; display: grid; gap: 26px; }
+.route { display: grid; gap: 10px; }
+.route-head { display: flex; justify-content: space-between; align-items: center; font-weight: 700; }
+.route-head span { font: 600 12px/1 var(--mono); letter-spacing: .1em; padding: 5px 9px; border-radius: 7px; direction: ltr; }
+.route.cloud .route-head span { background: rgba(255,51,82,.12); color: #ff8b9b; }
+.route.local .route-head span { background: rgba(52,211,153,.12); color: var(--green); }
+.lane { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 14px; border-radius: 16px; background: var(--bg2); border: 1px solid var(--line); }
+.stop { position: relative; z-index: 1; display: grid; justify-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--ink2); text-align: center; }
+.stop i { width: 44px; height: 44px; border-radius: 13px; display: grid; place-items: center; background: var(--panel2); border: 1px solid var(--line2); }
+.stop i svg { width: 21px; height: 21px; }
+.stop.bad i { border-color: rgba(255,51,82,.55); color: #ff8b9b; }
+.stop.good i { border-color: rgba(52,211,153,.6); color: var(--green); }
+.wire { flex: 1; height: 2px; background: var(--line2); position: relative; overflow: hidden; margin-bottom: 22px; }
+.wire::after { content: ""; position: absolute; top: 0; right: -30%; width: 30%; height: 2px; animation: pkt 1.6s linear infinite; }
+.cloud .wire::after { background: linear-gradient(90deg, transparent, var(--red)); animation-duration: 2.8s; }
+.local .wire::after { background: linear-gradient(90deg, transparent, var(--green)); animation-duration: .7s; }
+@keyframes pkt { to { right: 100%; } }
+.route p { color: var(--muted); font-size: 14px; }
+
+/* ===== المميزات (بنتو بمعاينات حية) ===== */
+.bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+.tile { position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: 22px; padding: 24px; display: grid; gap: 10px; align-content: start; overflow: hidden; min-width: 0; transition: border-color .2s; }
+.tile:hover { border-color: var(--line2); }
+.tile h3 { font-size: 20px; font-family: var(--display); font-weight: 900; }
+.tile p { color: var(--ink2); font-size: 15px; }
+.t-alerts { grid-column: span 3; } .t-battle { grid-column: span 3; } .t-side { grid-column: span 2; } .t-quiz { grid-column: span 2; } .t-layers { grid-column: span 2; } .t-obs { grid-column: span 3; } .t-log { grid-column: span 3; }
+@media (max-width: 940px) { .bento { grid-template-columns: 1fr 1fr; } .tile { grid-column: span 1 !important; } .t-alerts, .t-battle { grid-column: span 2 !important; } }
+@media (max-width: 600px) { .bento { grid-template-columns: 1fr; } .tile, .t-alerts, .t-battle { grid-column: span 1 !important; } }
+.demo { height: 150px; border-radius: 14px; background: var(--bg2); border: 1px solid var(--line); position: relative; overflow: hidden; margin-bottom: 6px; }
+/* أليرتات: كروت بتطلع ورا بعض */
+.d-alerts .row { position: absolute; inset-inline: 16px; display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 12px; background: var(--panel2); border: 1px solid var(--line2); font-size: 13px; animation: cycle 6s infinite; opacity: 0; }
+.d-alerts .row:nth-child(1) { top: 14px; } .d-alerts .row:nth-child(2) { top: 58px; animation-delay: 1s; } .d-alerts .row:nth-child(3) { top: 102px; animation-delay: 2s; }
+.d-alerts .row i { width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; flex: none; }
+.d-alerts .row i svg { width: 15px; height: 15px; }
+.d-alerts .row b { font-weight: 700; }
+.d-alerts .row em { margin-inline-start: auto; font-style: normal; font-family: var(--mono); font-size: 12px; color: var(--gold); direction: ltr; }
+@keyframes cycle { 0% { opacity: 0; transform: translateX(-14px); } 8%, 70% { opacity: 1; transform: none; } 80%, 100% { opacity: 0; transform: translateX(14px); } }
+/* تحدي الفرق */
+.d-battle { display: grid; align-content: center; padding-inline: 18px; gap: 10px; }
+.d-battle .bar { height: 26px; display: flex; border-radius: 99px; overflow: hidden; }
+.d-battle .bar i { display: block; background: linear-gradient(90deg, #ff9a6b, var(--red)); animation: tug 5s ease-in-out infinite; }
+.d-battle .bar b { flex: 1; background: linear-gradient(90deg, var(--blue), #6ff0ff); }
+@keyframes tug { 0%, 100% { flex-basis: 38%; } 40% { flex-basis: 64%; } 70% { flex-basis: 46%; } }
+.d-battle .names { display: flex; justify-content: space-between; font: 900 14px/1 var(--display); }
+.d-battle .names span:first-child { color: #ff9aa8; } .d-battle .names span:last-child { color: #9cc4ff; }
+.d-battle .gifts { display: flex; justify-content: space-between; }
+.d-battle .gifts div { display: flex; gap: 6px; }
+.d-battle .gifts span { font: 900 12px/1 var(--display); padding: 6px 8px; border-radius: 8px; background: var(--panel2); border: 1px solid var(--line2); direction: ltr; }
+/* اللوحة الجانبية */
+.d-side { padding: 12px; display: grid; gap: 6px; align-content: start; }
+.d-side div { font-size: 12px; background: var(--panel2); border-radius: 9px; padding: 5px 9px; width: fit-content; animation: msg .4s ease-out both; }
+.d-side div:nth-child(2) { animation-delay: .5s; } .d-side div:nth-child(3) { animation-delay: 1s; } .d-side div:nth-child(4) { animation-delay: 1.5s; }
+.d-side b { color: #9fd0ff; }
+.d-side .pin { border: 1px solid rgba(124,108,255,.6); background: rgba(124,108,255,.14); }
+/* الأسئلة */
+.d-quiz { padding: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-content: center; }
+.d-quiz span { font-size: 12.5px; font-weight: 600; padding: 9px; border-radius: 10px; background: var(--panel2); border: 1px solid var(--line2); text-align: center; }
+.d-quiz span.ok { animation: right 4s infinite; }
+@keyframes right { 0%, 55% { background: var(--panel2); border-color: var(--line2); } 65%, 100% { background: rgba(52,211,153,.18); border-color: var(--green); color: #bff5d9; } }
+/* الطبقات: ألعاب نارية */
+.d-layers canvas { width: 100%; height: 100%; display: block; }
+/* OBS */
+.d-obs { padding: 16px; display: grid; gap: 8px; align-content: center; }
+.d-obs .src { display: flex; align-items: center; gap: 10px; font-size: 13px; padding: 8px 10px; border-radius: 10px; background: var(--panel2); border: 1px solid var(--line2); }
+.d-obs .src i { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); }
+.d-obs .src code { margin-inline-start: auto; font-family: var(--mono); font-size: 11.5px; color: var(--muted); direction: ltr; }
+/* السجل */
+.d-log { padding: 14px; display: grid; gap: 6px; align-content: center; font-size: 12.5px; }
+.d-log div { display: grid; grid-template-columns: 52px 1fr auto; gap: 8px; align-items: center; padding: 6px 10px; border-radius: 9px; background: var(--panel2); }
+.d-log time { font-family: var(--mono); color: var(--muted); direction: ltr; }
+.d-log em { font-style: normal; font-size: 11px; padding: 2px 8px; border-radius: 99px; }
+.d-log .y { background: rgba(52,211,153,.15); color: var(--green); } .d-log .n { background: rgba(255,204,77,.14); color: var(--gold); }
+
+/* ===== الخطوات ===== */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; counter-reset: s; }
+@media (max-width: 860px) { .steps { grid-template-columns: 1fr; } }
+.step { counter-increment: s; background: var(--panel); border: 1px solid var(--line); border-radius: 22px; padding: 26px; display: grid; gap: 10px; align-content: start; position: relative; }
+.step::before { content: "0" counter(s); font: 900 46px/1 var(--display); color: transparent; -webkit-text-stroke: 1.5px var(--line2); direction: ltr; text-align: right; }
+.step h3 { font-size: 19px; }
+.step p { color: var(--ink2); font-size: 15px; }
+
+/* ===== الأسعار ===== */
+#pricing { background: var(--bg2); border-block: 1px solid var(--line); }
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: stretch; }
+@media (max-width: 860px) { .plans { grid-template-columns: 1fr; } }
+.plan { background: var(--panel); border: 1px solid var(--line); border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 12px; }
+.plan.best { position: relative; border-color: transparent; background: linear-gradient(var(--panel), var(--panel)) padding-box, linear-gradient(140deg, var(--red), var(--violet), var(--blue)) border-box; border: 1.5px solid transparent; box-shadow: 0 30px 70px -30px rgba(124,108,255,.6); }
+.plan .tag { align-self: flex-start; font-size: 12px; font-weight: 700; background: var(--violet); color: #fff; border-radius: 99px; padding: 3px 12px; }
+.plan h3 { font-size: 18px; color: var(--ink2); font-weight: 600; }
+.plan .price { font: 900 54px/1 var(--display); }
+.plan .price small { font: 500 17px var(--ui); color: var(--muted); }
+.plan .old { color: var(--muted); text-decoration: line-through; font-size: 15px; }
+.plan .per { color: var(--green); font-size: 14px; font-weight: 600; }
+.plan ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 8px; color: var(--ink2); font-size: 15px; }
+.plan li { display: flex; gap: 8px; align-items: center; }
+.plan li svg { width: 16px; height: 16px; color: var(--green); flex: none; }
+.plan .btn { margin-top: auto; }
+.free { margin-top: 18px; display: flex; gap: 14px; align-items: center; padding: 18px 22px; border-radius: 18px; border: 1px dashed var(--line2); color: var(--ink2); }
+.free svg { width: 26px; height: 26px; color: var(--violet2); flex: none; }
+
+/* ===== الاشتراك ===== */
+.sub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 860px) { .sub-grid { grid-template-columns: 1fr; } }
+.box { background: var(--panel); border: 1px solid var(--line); border-radius: 24px; padding: 26px; display: grid; gap: 16px; align-content: start; }
+.how { counter-reset: h; display: grid; gap: 16px; margin: 0; padding: 0; list-style: none; }
+.how li { counter-increment: h; display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
+.how li::before { content: counter(h); width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; background: rgba(124,108,255,.16); color: var(--violet2); font-weight: 700; border: 1px solid rgba(124,108,255,.4); }
+.how b { display: block; }
+.how span { color: var(--muted); font-size: 14.5px; }
+label.f { display: grid; gap: 6px; font-size: 14px; color: var(--muted); }
+.f-in { font: inherit; color: var(--ink); background: var(--bg2); border: 1px solid var(--line2); border-radius: 12px; padding: 11px 13px; }
+input.f-in { direction: ltr; font-family: var(--mono); letter-spacing: .04em; }
+.pay { display: grid; gap: 10px; }
+.pay-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--bg2); border: 1px solid var(--line); border-radius: 14px; padding: 11px 14px; }
+.pay-row b { display: block; font-size: 13px; color: var(--muted); font-weight: 500; }
+.pay-row code { font-family: var(--mono); font-size: 15.5px; direction: ltr; unicode-bidi: isolate; word-break: break-all; }
+.copy { font: inherit; font-size: 13px; padding: 7px 13px; border-radius: 10px; border: 1px solid var(--line2); background: var(--panel2); color: var(--ink); cursor: pointer; flex: none; text-decoration: none; }
+
+/* ===== أسئلة ===== */
+.faq { display: grid; gap: 10px; max-width: 820px; }
+details { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 16px 20px; }
+summary { cursor: pointer; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--violet2); font-size: 22px; line-height: 1; transition: transform .2s; }
+details[open] summary::after { transform: rotate(45deg); }
+details p { margin-top: 10px; color: var(--ink2); }
+
+/* ===== الختام ===== */
+.final { text-align: center; padding-block: 110px; overflow: hidden; }
+.final::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(500px 260px at 50% 60%, rgba(124,108,255,.25), transparent 70%); }
+.final h2 { font-size: clamp(34px, 5.4vw, 60px); }
+.final p { color: var(--ink2); font-size: 18px; margin: 16px auto 30px; max-width: 46ch; }
+footer { border-top: 1px solid var(--line); padding-block: 28px; color: var(--muted); font-size: 14px; }
+footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+[hidden] { display: none !important; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } .alert { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="fist" viewBox="0 0 120 90"><g stroke="#1a1a24" stroke-opacity=".7" stroke-width="2.4" stroke-linejoin="round"><rect x="0" y="33" width="34" height="26" rx="8" fill="currentColor"/><rect x="27" y="28" width="11" height="36" rx="4" fill="#fff"/><path d="M42 18h34v56H42c-4 0-7-3-7-7V25c0-4 3-7 7-7z" fill="currentColor"/><rect x="64" y="15" width="47" height="15" rx="7.5" fill="currentColor"/><rect x="66" y="29" width="48" height="15" rx="7.5" fill="currentColor"/><rect x="65" y="43" width="46" height="15" rx="7.5" fill="currentColor"/><rect x="63" y="57" width="42" height="14" rx="7" fill="currentColor"/><path d="M44 49c15-7 34-7 47-1 5 2 5 10-1 12-15 4-31 3-45-2-5-2-5-7-1-9z" fill="currentColor"/></g></symbol>
+  <symbol id="gift" viewBox="0 0 64 64"><rect x="10" y="26" width="44" height="30" rx="5" fill="#ff5c7a"/><rect x="6" y="18" width="52" height="12" rx="4" fill="#ff7d95"/><rect x="28" y="18" width="8" height="38" fill="#ffd166"/><path d="M32 18c-6-10-18-10-17-3 1 5 10 4 17 3zm0 0c6-10 18-10 17-3-1 5-10 4-17 3z" fill="#ffd166"/><rect x="10" y="26" width="44" height="5" fill="#000" opacity=".12"/></symbol>
+  <symbol id="heart" viewBox="0 0 24 24"><path d="M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-3 4.5 4.5 0 0 1 8 3c0 6-8 11-8 11z" fill="#ff5e96"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
+  <symbol id="i-pc" viewBox="0 0 24 24"><path d="M3 4h18v12H3zM8 20h8M12 16v4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M17.5 19H7a5 5 0 1 1 .9-9.9A6 6 0 0 1 19 11a4 4 0 0 1-1.5 8z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M2 9a15 15 0 0 1 20 0M12 20h.01" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+  <symbol id="i-cam" viewBox="0 0 24 24"><path d="M15 10l5-3v10l-5-3zM3 6h12v12H3z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
+  <symbol id="i-hd" viewBox="0 0 24 24"><path d="M3 5h18v14H3zM7 9v6M7 12h4M11 9v6M14 9h2a3 3 0 0 1 0 6h-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M19 8v6M22 11h-6M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 3v12M6 11l6 6 6-6M4 21h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M20.5 12a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.2-4.2A8.5 8.5 0 1 1 20.5 12z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M9 8.5c0 3.5 3 6.5 6.5 6.5l1-1.6-2-1-1 .8c-1-.4-2.3-1.7-2.7-2.7l.8-1-1-2z" fill="currentColor"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+</defs></svg>
+
+<nav><div class="wrap">
+  <a class="logo" href="#top"><span class="mark" aria-hidden="true"></span><span>Weso Live Studio <small>by Weso Gaming</small></span></a>
+  <div class="links"><a href="#local">من جهازك</a><a href="#features">المميزات</a><a href="#pricing">الأسعار</a><a href="#subscribe">الاشتراك</a><a href="#faq">أسئلة</a></div>
+  <a class="btn primary" href="#" data-download>حمّل مجانًا</a>
+</div></nav>
+
+<main id="top">
+  <!-- ========== الواجهة ========== -->
+  <section class="hero"><div class="wrap hero-grid">
+    <div>
+      <span class="onair"><i></i>ON AIR · TIKTOK LIVE</span>
+      <h1>اللايف بتاعك<br>يستاهل <span class="grad">استوديو</span><br>بجد.</h1>
+      <p class="lede">أليرتات ولوحة جانبية وتحديات بالهدايا، بتشتغل كلها من جهازك ومتوصلة بـ OBS. برنامج عربي معمول من ستريمر، لستريمرز.</p>
+      <div class="cta">
+        <a class="btn primary" href="#" data-download><svg><use href="#i-dl"/></svg>حمّل وجرّب 14 يوم مجانًا</a>
+        <a class="btn" href="#features">شوف بيعمل إيه</a>
+      </div>
+      <div class="note">
+        <span><svg><use href="#i-check"/></svg>من غير دفع</span>
+        <span><svg><use href="#i-check"/></svg>ويندوز 10 و 11</span>
+        <span><svg><use href="#i-check"/></svg>عربي بالكامل</span>
+      </div>
+    </div>
+
+    <div class="studio" aria-label="شكل اللايف والبرنامج شغال">
+      <div class="phone">
+        <div class="screen" id="screen">
+          <div class="game"></div>
+          <div class="notch"></div>
+          <div class="ov live-top"><span class="pill live">LIVE</span><span class="pill view"><svg><use href="#i-eye"/></svg><b id="viewers">1,284</b></span></div>
+          <div class="ov mb">
+            <span class="clock" id="mClock">01:30</span>
+            <div class="bar"><div class="ba" id="mA">320</div><div class="bb" id="mB">290</div>
+              <div class="seam" id="mSeam" style="right:50%"><div class="fist fa"><svg viewBox="0 0 120 90"><use href="#fist"/></svg></div><div class="fist fb"><svg viewBox="0 0 120 90"><use href="#fist"/></svg></div></div>
+            </div>
+            <div class="teams"><span>الأحمر</span><span>الأزرق</span></div>
+          </div>
+          <div class="ov alert" id="mAlert">
+            <div class="burst"><svg viewBox="0 0 64 64"><use href="#gift"/></svg></div>
+            <div class="name" id="mAlertName"><b>سارة</b> بعتت هدية</div>
+            <div class="sub" id="mAlertSub">×10 · شكرًا يا بطلة</div>
+          </div>
+          <div class="ov hearts" id="mHearts"></div>
+          <div class="ov chat" id="mChat"></div>
+          <div class="ov bottom-bar"><span class="say">اكتب تعليق...</span><i><svg><use href="#i-gift"/></svg></i><i><svg><use href="#i-heart"/></svg></i></div>
+        </div>
+      </div>
+      <div class="callout c1"><i><svg><use href="#i-users"/></svg></i><span>تحدي الفرق<small>الهدايا بتحرّك الشريط</small></span></div>
+      <div class="callout c2"><i><svg><use href="#i-bell"/></svg></i><span>أليرت الهدية<small>من الهارد، مش من النت</small></span></div>
+      <div class="callout c3"><i><svg><use href="#i-heart"/></svg></i><span>نافورة القلوب<small>مع كل لايك</small></span></div>
+      <div class="callout c4"><i><svg><use href="#i-chat"/></svg></i><span>الشات قدامك<small>في اللوحة الجانبية</small></span></div>
+    </div>
+  </div></section>
+
+  <div class="strip"><div class="wrap">
+    <div class="cell"><b>0 MB</b><span>نت بتروح على الأليرتات</span></div>
+    <div class="cell"><b>14</b><span>يوم تجربة مجانًا</span></div>
+    <div class="cell"><b>OBS</b><span>رابط واحد لكل طبقة</span></div>
+    <div class="cell"><b>100%</b><span>عربي</span></div>
+  </div></div>
+
+  <!-- ========== من جهازك ========== -->
+  <section id="local"><div class="wrap local-grid">
+    <div class="reveal">
+      <span class="kicker">The Local Advantage</span>
+      <h2 style="margin-top:14px;">الأليرتات بتشتغل <em>من جهازك</em>،<br>مش من النت.</h2>
+      <p style="color:var(--ink2);font-size:18px;margin-top:18px;max-width:52ch;">فيديوهات الأليرتات وأصواتها متخزّنة على جهازك، والبرنامج بيعرضها لـ OBS من جوه نفس الجهاز. مفيش سيرفر في النص، ومفيش حاجة بتتحمّل وانت لايف.</p>
+      <div class="points">
+        <div class="point"><i><svg><use href="#i-up"/></svg></i><div><h3>النت كله للبث</h3><p>سرعة الرفع بتاعتك بتروح للصورة والصوت بس، فالبث يفضل نضيف وما يقطّعش لما الهدايا تكتر.</p></div></div>
+        <div class="point"><i><svg><use href="#i-bolt"/></svg></i><div><h3>الأليرت بيظهر في نفس اللحظة</h3><p>مفيش تحميل ولا انتظار. الفيديو شغال من الهارد على طول، حتى لو جالك عشر هدايا ورا بعض.</p></div></div>
+        <div class="point"><i><svg><use href="#i-hd"/></svg></i><div><h3>حط فيديوهاتك بأعلى جودة</h3><p>حجم الفيديو مش هيفرق مع النت، فتقدر تستخدم أليرتات تقيلة وجودتها عالية من غير ما تقلق.</p></div></div>
+        <div class="point"><i><svg><use href="#i-shield"/></svg></i><div><h3>ما بتعتمدش على سيرفر حد</h3><p>لو موقع أداة أونلاين وقع أو بطّأ في نص لايفك، أليرتاتك ما بتتأثرش، لأنها أصلًا على جهازك.</p></div></div>
+      </div>
+    </div>
+
+    <div class="path reveal" aria-label="مقارنة مسار الأليرت">
+      <div class="route cloud">
+        <div class="route-head">أدوات الأونلاين <span>CLOUD</span></div>
+        <div class="lane">
+          <div class="stop"><i><svg><use href="#i-cloud"/></svg></i>سيرفر الأداة</div>
+          <div class="wire"></div>
+          <div class="stop bad"><i><svg><use href="#i-wifi"/></svg></i>النت بتاعك</div>
+          <div class="wire"></div>
+          <div class="stop"><i><svg><use href="#i-cam"/></svg></i>OBS</div>
+        </div>
+        <p>الفيديو بيتحمّل من سيرفرهم على النت، ويشارك البث في سرعة الرفع.</p>
+      </div>
+      <div class="route local">
+        <div class="route-head">Weso Live Studio <span>LOCAL</span></div>
+        <div class="lane">
+          <div class="stop good"><i><svg><use href="#i-pc"/></svg></i>جهازك</div>
+          <div class="wire"></div>
+          <div class="stop"><i><svg><use href="#i-cam"/></svg></i>OBS</div>
+        </div>
+        <p>من الهارد لـ OBS على نفس الجهاز. صفر نت للأليرتات.</p>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- ========== المميزات ========== -->
+  <section id="features" style="background:var(--bg2);border-block:1px solid var(--line);"><div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">Everything In One Place</span>
+      <h2>كل اللي اللايف محتاجه</h2>
+      <p>مش محتاج خمس أدوات وعشر روابط. كل حاجة في برنامج واحد، وكل طبقة ليها رابط تحطه في OBS.</p>
+    </div>
+    <div class="bento">
+      <article class="tile t-alerts reveal">
+        <div class="demo d-alerts">
+          <div class="row"><i style="background:rgba(255,92,122,.16);color:#ff8ea4"><svg><use href="#i-gift"/></svg></i><b>أحمد</b> بعت هدية <em>×5</em></div>
+          <div class="row"><i style="background:rgba(124,108,255,.18);color:var(--violet2)"><svg><use href="#i-plus"/></svg></i><b>نور</b> عملت فولو</div>
+          <div class="row"><i style="background:rgba(52,211,153,.16);color:var(--green)"><svg><use href="#i-share"/></svg></i><b>كريم</b> شيّر اللايف</div>
+        </div>
+        <h3>أليرتات لكل حاجة</h3>
+        <p>فيديو وصوت ونص لكل هدية أو مدى عملات، وترحيب بأسماء ناس معينة، وأليرت للفولو واللايكات والشير.</p>
+      </article>
+      <article class="tile t-battle reveal">
+        <div class="demo d-battle">
+          <div class="names"><span>فريق الأحمر</span><span>فريق الأزرق</span></div>
+          <div class="bar"><i></i><b></b></div>
+          <div class="gifts"><div><span>+1</span><span>+100</span><span>+500</span></div><div><span>+500</span><span>+100</span><span>+1</span></div></div>
+        </div>
+        <h3>تحدي الفرق</h3>
+        <p>الجمهور فريقين، وكل فريق ليه هداياه. الهدية بتزوّد النقط والقبضتين بيتخانقوا، واللي يجمع أكتر قبل الوقت يكسب.</p>
+      </article>
+      <article class="tile t-side reveal">
+        <div class="demo d-side">
+          <div><b>مازن:</b> يلا يا ويسو</div>
+          <div class="pin"><b>هنا:</b> إمتى الجولة الجاية؟</div>
+          <div><b>زياد:</b> GG</div>
+          <div><b>ريم:</b> عاش</div>
+        </div>
+        <h3>اللوحة الجانبية</h3>
+        <p>الشات والداعمين قدامك وانت بتلعب، وتعرض أي تعليق على الشاشة بضغطة.</p>
+      </article>
+      <article class="tile t-quiz reveal">
+        <div class="demo d-quiz"><span>1</span><span class="ok">2</span><span>3</span><span>4</span></div>
+        <h3>تحدي الأسئلة</h3>
+        <p>مسابقة الناس بتجاوب فيها برقم في الشات، وفي الآخر بطل.</p>
+      </article>
+      <article class="tile t-layers reveal">
+        <div class="demo d-layers"><canvas id="fw" aria-hidden="true"></canvas></div>
+        <h3>طبقات فوق البث</h3>
+        <p>ألعاب نارية بالهدايا، ونافورة قلوب، وأكبر الداعمين.</p>
+      </article>
+      <article class="tile t-obs reveal">
+        <div class="demo d-obs">
+          <div class="src"><i></i>الأليرتات<code>/overlay/alerts</code></div>
+          <div class="src"><i></i>تحدي الفرق<code>/overlay/layer/battle</code></div>
+          <div class="src"><i></i>نافورة القلوب<code>/overlay/layer/hearts</code></div>
+        </div>
+        <h3>متوصل بـ OBS</h3>
+        <p>انسخ الرابط وحطه Browser Source. وفيه فحص قبل اللايف يقولك لو فيه حاجة ناقصة.</p>
+      </article>
+      <article class="tile t-log reveal">
+        <div class="demo d-log">
+          <div><time>21:04</time><span>أحمد · هدية ×5</span><em class="y">ظهر</em></div>
+          <div><time>21:06</time><span>نور · فولو</span><em class="y">ظهر</em></div>
+          <div><time>21:07</time><span>كريم · لايكات</span><em class="n">مستني الطابور</em></div>
+        </div>
+        <h3>سجل وتقرير بعد اللايف</h3>
+        <p>كل اللي حصل، ومين دعم، وليه أليرت معيّن ما ظهرش.</p>
+      </article>
+    </div>
+  </div></section>
+
+  <!-- ========== الخطوات ========== -->
+  <section><div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">Up And Running</span>
+      <h2>جاهز في 3 خطوات</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><h3>حمّل البرنامج</h3><p>سطّبه على الويندوز، واكتب اسمك ورقم الواتساب، والتجربة تبدأ على طول.</p></div>
+      <div class="step reveal"><h3>اربط حسابك على تيك توك</h3><p>اكتب اسم حسابك، والبرنامج يتصل لوحده أول ما تفتح لايف.</p></div>
+      <div class="step reveal"><h3>حط الروابط في OBS</h3><p>انسخ رابط كل طبقة وحطه Browser Source، واعمل أليرتاتك بفيديوهاتك.</p></div>
+    </div>
+  </div></section>
+
+  <!-- ========== الأسعار ========== -->
+  <section id="pricing"><div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">Pricing</span>
+      <h2>اختار الباقة</h2>
+      <p>كل الباقات فيها البرنامج كامل. الفرق في المدة بس.</p>
+    </div>
+    <div class="plans">
+      <div class="plan reveal">
+        <h3>شهر</h3>
+        <div class="price"><span data-price="month"></span> <small>ج</small></div>
+        <ul><li><svg><use href="#i-check"/></svg>كل المميزات</li><li><svg><use href="#i-check"/></svg>جهاز واحد</li><li><svg><use href="#i-check"/></svg>التحديثات</li></ul>
+        <a class="btn" href="#subscribe" data-plan="شهر">اشترك</a>
+      </div>
+      <div class="plan best reveal">
+        <span class="tag">الأوفر · عرض الإطلاق</span>
+        <h3>سنة</h3>
+        <div class="price"><span data-price="launchYear"></span> <small>ج</small></div>
+        <div class="old"><span data-price="year"></span> ج</div>
+        <div class="per" data-per="launchYear"></div>
+        <ul><li><svg><use href="#i-check"/></svg>كل المميزات</li><li><svg><use href="#i-check"/></svg>جهاز واحد</li><li><svg><use href="#i-check"/></svg>كل التحديثات سنة كاملة</li><li><svg><use href="#i-check"/></svg><span data-launch-left></span></li></ul>
+        <a class="btn primary" href="#subscribe" data-plan="سنة (عرض الإطلاق)">اشترك سنة</a>
+      </div>
+      <div class="plan reveal">
+        <h3>3 شهور</h3>
+        <div class="price"><span data-price="quarter"></span> <small>ج</small></div>
+        <div class="per" data-per="quarter"></div>
+        <ul><li><svg><use href="#i-check"/></svg>كل المميزات</li><li><svg><use href="#i-check"/></svg>جهاز واحد</li><li><svg><use href="#i-check"/></svg>التحديثات</li></ul>
+        <a class="btn" href="#subscribe" data-plan="3 شهور">اشترك</a>
+      </div>
+    </div>
+    <div class="free reveal"><svg><use href="#i-spark"/></svg><span>جرّب البرنامج كامل <b>14 يوم مجانًا</b> الأول. اشترك بس لو عجبك، وإعداداتك وأليرتاتك كلها بتفضل زي ما هي.</span></div>
+  </div></section>
+
+  <!-- ========== الاشتراك ========== -->
+  <section id="subscribe"><div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">How To Subscribe</span>
+      <h2>إزاي تشترك</h2>
+    </div>
+    <div class="sub-grid">
+      <div class="box reveal">
+        <ol class="how">
+          <li><div><b>انسخ رقم جهازك</b><span>بيظهر في البرنامج لما التجربة تخلص، ولو جيت من البرنامج هتلاقيه مكتوب هنا.</span></div></li>
+          <li><div><b>حوّل تمن الباقة</b><span>بإنستاباي أو المحفظة أو لينك الدعم.</span></div></li>
+          <li><div><b>ابعت صورة التحويل على الواتساب</b><span>والزرار اللي تحت بيكتبلك الرسالة جاهزة برقم جهازك والباقة.</span></div></li>
+          <li><div><b>دوس «تحقق تاني» في البرنامج</b><span>أول ما نفعّلك، البرنامج يفتح على طول.</span></div></li>
+        </ol>
+      </div>
+      <div class="box reveal">
+        <label class="f" for="dev">رقم جهازك
+          <input class="f-in" id="dev" placeholder="WESO-XXXX-XXXX-XXXX-XXXX" maxlength="24" autocomplete="off">
+        </label>
+        <label class="f" for="plan">الباقة
+          <select class="f-in" id="plan"></select>
+        </label>
+        <div class="pay">
+          <div class="pay-row"><div><b>إنستاباي</b><code id="payInsta"></code></div><button class="copy" data-copy="payInsta" type="button">نسخ</button></div>
+          <div class="pay-row"><div><b id="walletName">محفظة</b><code id="payWallet"></code></div><button class="copy" data-copy="payWallet" type="button">نسخ</button></div>
+          <div class="pay-row" id="supportRow" hidden><div><b>لينك الدعم</b><span style="font-size:15px;">ادفع من اللينك على طول</span></div><a class="copy" id="supportLink" target="_blank" rel="noopener">افتح</a></div>
+        </div>
+        <a class="btn wa" id="waBtn" href="#" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>ابعت صورة التحويل على الواتساب</a>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- ========== أسئلة ========== -->
+  <section id="faq" style="background:var(--bg2);border-top:1px solid var(--line);"><div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">FAQ</span>
+      <h2>أسئلة بتتكرر</h2>
+    </div>
+    <div class="faq">
+      <details><summary>التجربة المجانية فيها كل حاجة؟</summary><p>آه، البرنامج كامل 14 يوم من غير أي حدود. بعدها البرنامج بيقف لحد ما تشترك، وإعداداتك وأليرتاتك كلها بتفضل محفوظة.</p></details>
+      <details><summary>إزاي الأليرتات ما بتاخدش نت؟</summary><p>فيديوهات الأليرتات متخزّنة على جهازك، والبرنامج بيعرضها لـ OBS من جوه نفس الجهاز. اللي بييجي من النت هو بيانات اللايف نفسها (مين بعت هدية مثلًا)، ودي حاجة صغيرة جدًا.</p></details>
+      <details><summary>ممكن البرنامج يقف وأنا في نص لايف؟</summary><p>لأ. البرنامج عمره ما بيقفل وهو مفتوح. التأكد من الاشتراك بيحصل بس وانت بتفتحه.</p></details>
+      <details><summary>الاشتراك على كام جهاز؟</summary><p>جهاز واحد. لو غيّرت جهازك كلّمنا على الواتساب وننقلك الاشتراك.</p></details>
+      <details><summary>التفعيل بياخد قد إيه بعد الدفع؟</summary><p>غالبًا في نفس اليوم، أول ما نشوف صورة التحويل. ولو جدّدت والاشتراك لسه شغال، الأيام الجديدة بتتزوّد على اللي فاضل.</p></details>
+    </div>
+  </div></section>
+
+  <section class="final"><div class="wrap reveal">
+    <span class="onair"><i></i>READY WHEN YOU ARE</span>
+    <h2 style="margin-top:20px;">اللايف الجاي يبقى <span style="background:linear-gradient(100deg,var(--red),var(--violet),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent;">غير</span>.</h2>
+    <p>حمّل البرنامج وجرّبه 14 يوم مجانًا. لو ما عجبكش، مش هتدفع حاجة.</p>
+    <a class="btn primary" href="#" data-download><svg><use href="#i-dl"/></svg>حمّل مجانًا</a>
+  </div></section>
+</main>
+
+<footer><div class="wrap"><span>Weso Live Studio · by Weso Gaming</span><span>معمول في مصر</span></div></footer>
+
+<script>
+/* ===== بيانات الصفحة والاشتراك ===== */
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const P = SITE.prices;
+  const fmt = (n) => Number(n).toLocaleString('en-US');
+  document.querySelectorAll('[data-price]').forEach(el => { el.textContent = fmt(P[el.dataset.price]); });
+  const per = { quarter: Math.round(P.quarter / 3), launchYear: Math.round(P.launchYear / 12) };
+  document.querySelectorAll('[data-per]').forEach(el => { el.textContent = `يعني ${fmt(per[el.dataset.per])} ج في الشهر`; });
+  document.querySelectorAll('[data-launch-left]').forEach(el => { el.textContent = `السعر ده لـ ${P.launchLeft}`; });
+  document.querySelectorAll('[data-download]').forEach(a => { a.href = SITE.downloadUrl || '#'; });
+
+  const plans = [['سنة (عرض الإطلاق)', P.launchYear], ['3 شهور', P.quarter], ['شهر', P.month]];
+  $('plan').innerHTML = plans.map(([n, p]) => `<option value="${n}">${n} · ${fmt(p)} ج</option>`).join('');
+  document.querySelectorAll('[data-plan]').forEach(a => a.addEventListener('click', () => { $('plan').value = a.dataset.plan; waLink(); }));
+
+  $('payInsta').textContent = SITE.instapay;
+  $('payWallet').textContent = SITE.wallet;
+  $('walletName').textContent = SITE.walletName || 'محفظة';
+  if (SITE.supportLink) { $('supportRow').hidden = false; $('supportLink').href = SITE.supportLink; }
+
+  const DEV_RE = /^WESO(-[0-9A-F]{4}){4}$/;
+  const fromApp = (new URLSearchParams(location.search).get('device') || '').toUpperCase();
+  if (DEV_RE.test(fromApp)) $('dev').value = fromApp;
+
+  function waLink() {
+    const dev = $('dev').value.trim().toUpperCase();
+    const text = `عاوز أشترك في Weso Live Studio\nالباقة: ${$('plan').value}\nرقم الجهاز: ${dev || '(هكتبه)'}\nوده صورة التحويل:`;
+    $('waBtn').href = `https://wa.me/${String(SITE.whatsapp).replace(/\D/g, '')}?text=${encodeURIComponent(text)}`;
+  }
+  $('dev').addEventListener('input', waLink);
+  $('plan').addEventListener('change', waLink);
+  waLink();
+
+  document.querySelectorAll('button[data-copy]').forEach(b => b.addEventListener('click', async () => {
+    const t = $(b.dataset.copy).textContent;
+    try { await navigator.clipboard.writeText(t); b.textContent = 'اتنسخ'; } catch (e) { const r = document.createRange(); r.selectNodeContents($(b.dataset.copy)); getSelection().removeAllRanges(); getSelection().addRange(r); }
+    setTimeout(() => { b.textContent = 'نسخ'; }, 1500);
+  }));
+})();
+
+/* ===== اللايف على الموبايل: هدايا وأليرتات وقلوب وشات ===== */
+(function () {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = (id) => document.getElementById(id);
+  const screen = $('screen');
+  if (!screen || reduce) return;
+  const names = ['سارة', 'أحمد', 'نور', 'كريم', 'هنا', 'زياد', 'ريم', 'مازن'];
+  const lines = ['يلا يا ويسو', 'عاش يا بطل', 'GG', 'الأحمر هيكسب', 'لا الأزرق', 'سلام من إسكندرية', 'إمتى الجولة الجاية؟', 'جامد'];
+  const thanks = ['شكرًا يا بطل', 'تسلم إيدك', 'منوّر اللايف', 'إنت الأساس'];
+  const pick = (a) => a[Math.floor(Math.random() * a.length)];
+  let a = 320, b = 290, sec = 90, viewers = 1284, on = true;
+
+  function score(team, v) {
+    if (team === 0) a += v; else b += v;
+    $('mA').textContent = a.toLocaleString('en-US'); $('mB').textContent = b.toLocaleString('en-US');
+    const share = Math.min(76, Math.max(24, a / (a + b) * 100));
+    $('mA').style.flexBasis = share + '%'; $('mSeam').style.right = share + '%';
+    const p = document.createElement('span');
+    p.className = 'plus'; p.textContent = '+' + v;
+    p.style.top = '118px'; p.style.right = team === 0 ? (8 + Math.random() * 25) + '%' : (55 + Math.random() * 25) + '%';
+    screen.appendChild(p); setTimeout(() => p.remove(), 1250);
+  }
+  function alertOnce() {
+    const who = pick(names), count = pick([1, 5, 10, 20, 99]);
+    $('mAlertName').innerHTML = `<b>${who}</b> بعت${/[ةاى]$/.test(who) && who !== 'زياد' ? 'ت' : ''} هدية`;
+    $('mAlertSub').textContent = `×${count} · ${pick(thanks)}`;
+    $('mAlert').classList.add('show');
+    score(Math.random() < .5 ? 0 : 1, count * 10);
+    setTimeout(() => $('mAlert').classList.remove('show'), 2600);
+  }
+  function heart() {
+    const h = document.createElement('span');
+    h.style.setProperty('--dx', (Math.random() * 40 - 30) + 'px');
+    h.innerHTML = '<svg viewBox="0 0 24 24"><use href="#heart"/></svg>';
+    $('mHearts').appendChild(h); setTimeout(() => h.remove(), 3300);
+  }
+  function chat() {
+    const box = $('mChat');
+    const d = document.createElement('div');
+    d.innerHTML = `<b>${pick(names)}</b>${pick(lines)}`;
+    box.appendChild(d);
+    while (box.children.length > 4) box.firstElementChild.remove();
+  }
+  const timers = [];
+  function start() {
+    timers.push(setInterval(() => on && alertOnce(), 4200));
+    timers.push(setInterval(() => on && heart(), 420));
+    timers.push(setInterval(() => on && chat(), 1500));
+    timers.push(setInterval(() => { if (!on) return; if (Math.random() < .5) score(Math.random() < .5 ? 0 : 1, pick([1, 1, 5, 100])); }, 900));
+    timers.push(setInterval(() => {
+      if (!on) return;
+      sec = sec <= 0 ? 90 : sec - 1;
+      $('mClock').textContent = `0${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, '0')}`;
+      viewers += Math.round(Math.random() * 8 - 3);
+      $('viewers').textContent = viewers.toLocaleString('en-US');
+    }, 1000));
+    setTimeout(alertOnce, 900); chat(); chat();
+  }
+  new IntersectionObserver((e) => { on = e[0].isIntersecting && !document.hidden; }).observe(screen);
+  document.addEventListener('visibilitychange', () => { on = !document.hidden; });
+  start();
+})();
+
+/* ===== ألعاب نارية صغيرة في كارت الطبقات ===== */
+(function () {
+  const c = document.getElementById('fw');
+  if (!c || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const ctx = c.getContext('2d');
+  let W = 0, H = 0, parts = [], on = false;
+  const colors = ['#ff3352', '#7c6cff', '#2b7bff', '#ffcc4d', '#34d399', '#ff5e96'];
+  function size() { const r = c.getBoundingClientRect(); const d = Math.min(2, devicePixelRatio || 1); W = r.width; H = r.height; c.width = W * d; c.height = H * d; ctx.setTransform(d, 0, 0, d, 0, 0); }
+  function boom() {
+    const x = W * (.2 + Math.random() * .6), y = H * (.25 + Math.random() * .35), col = colors[Math.floor(Math.random() * colors.length)];
+    for (let i = 0; i < 46; i++) { const a = Math.PI * 2 * i / 46, s = 1.2 + Math.random() * 2.2; parts.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life: 1, col }); }
+  }
+  function frame() {
+    if (!on) return;
+    ctx.clearRect(0, 0, W, H);
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const p = parts[i];
+      p.x += p.vx; p.y += p.vy; p.vy += .035; p.vx *= .985; p.life -= .014;
+      if (p.life <= 0) { parts.splice(i, 1); continue; }
+      ctx.globalAlpha = p.life; ctx.fillStyle = p.col; ctx.fillRect(p.x, p.y, 2.2, 2.2);
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(frame);
+  }
+  let iv = null;
+  new IntersectionObserver((e) => {
+    const vis = e[0].isIntersecting;
+    if (vis && !on) { on = true; size(); boom(); iv = setInterval(boom, 1100); requestAnimationFrame(frame); }
+    else if (!vis && on) { on = false; clearInterval(iv); parts = []; }
+  }).observe(c);
+  addEventListener('resize', () => on && size());
+})();
+
+</script>
+</body>
+</html>
