@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>تفعيل Weso Live Studio</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Tajawal:wght@700;900&display=swap">
+<script>
+  // ✏️ رابط سيرفر الترخيص (نفس اللي في البرنامج)
+  const SERVER_URL = 'https://script.google.com/macros/s/AKfycbxaHOhO0le_SUZel77AjgKNtoXZdpfXs_aotr90dal5_ITNs9syr4JakdcpZ6vxCcbe9Q/exec';
+  const WHATSAPP = '201095118181';
+</script>
+<style>
+:root {
+  --bg: #07080c; --panel: #11121a; --panel2: #161722; --line: #23253a; --line2: #2f3250;
+  --ink: #eef0f6; --ink2: #c3c6d6; --muted: #8a8ea6; --violet: #7c6cff; --violet2: #b4aaff; --green: #34d399; --red: #ff6b7d; --gold: #ffcc4d;
+  --ui: 'IBM Plex Sans Arabic', 'Segoe UI', Tahoma, sans-serif; --display: 'Tajawal', 'IBM Plex Sans Arabic', sans-serif; --mono: Consolas, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; background: radial-gradient(700px 420px at 50% -10%, rgba(124,108,255,.22), transparent 70%), var(--bg); color: var(--ink); font-family: var(--ui); font-size: 16px; line-height: 1.7; }
+.wrap { max-width: 560px; margin: 0 auto; padding: 40px max(18px, env(safe-area-inset-left, 0px)) 60px; display: grid; gap: 22px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }
+.mark { width: 36px; height: 36px; border-radius: 10px; background: conic-gradient(from 200deg, #ff3352, var(--violet), #2b7bff, #ff3352); display: grid; place-items: center; }
+.mark::after { content: ""; width: 11px; height: 11px; border-radius: 50%; background: #fff; box-shadow: 0 0 12px #fff; }
+.brand b { font-family: var(--display); font-weight: 900; font-size: 20px; }
+h1 { margin: 0; font-family: var(--display); font-weight: 900; font-size: clamp(28px, 6vw, 38px); line-height: 1.2; text-wrap: balance; }
+.lede { margin: 0; color: var(--ink2); }
+.tabs { display: flex; gap: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 5px; }
+.tab { flex: 1; padding: 10px; border: 0; border-radius: 10px; background: transparent; color: var(--muted); font: inherit; font-weight: 700; cursor: pointer; }
+.tab.on { background: var(--violet); color: #fff; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 24px; display: grid; gap: 16px; }
+label { display: grid; gap: 6px; font-size: 14px; color: var(--muted); }
+label b { color: var(--ink2); font-weight: 600; }
+.in { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line2); border-radius: 12px; padding: 12px 14px; width: 100%; }
+.in:focus { outline: none; border-color: var(--violet); }
+.ltr { direction: ltr; text-align: left; }
+.dev { font-family: var(--mono); letter-spacing: .05em; text-align: center; font-size: 17px; }
+.dev[readonly] { background: rgba(124,108,255,.08); border-color: rgba(124,108,255,.45); }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
+.btn { font: inherit; font-weight: 700; padding: 14px; border-radius: 13px; border: 0; background: var(--violet); color: #fff; cursor: pointer; box-shadow: 0 14px 40px -14px rgba(124,108,255,.9); }
+.btn:disabled { opacity: .55; cursor: default; }
+.btn:focus-visible, .in:focus-visible, .tab:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.msg { display: none; border-radius: 14px; padding: 14px 16px; font-weight: 600; }
+.msg.on { display: block; }
+.msg.ok { background: rgba(52,211,153,.12); border: 1px solid rgba(52,211,153,.45); color: #bff5d9; }
+.msg.bad { background: rgba(255,107,125,.1); border: 1px solid rgba(255,107,125,.4); color: #ffc2ca; }
+.msg small { display: block; font-weight: 400; color: var(--ink2); margin-top: 4px; }
+.hint { font-size: 13px; color: var(--muted); margin: 0; }
+.done { text-align: center; display: grid; gap: 10px; justify-items: center; padding: 30px 20px; }
+.done .big { width: 70px; height: 70px; border-radius: 50%; display: grid; place-items: center; background: rgba(52,211,153,.15); border: 2px solid var(--green); color: var(--green); font-size: 34px; font-weight: 900; }
+.done h2 { margin: 0; font-family: var(--display); font-weight: 900; font-size: 26px; }
+.foot { text-align: center; font-size: 14px; color: var(--muted); }
+.foot a { color: var(--violet2); }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="brand" href="./"><span class="mark" aria-hidden="true"></span><b>Weso Live Studio</b></a>
+
+  <div class="tabs" role="tablist">
+    <button class="tab on" data-v="trial" type="button">ابدأ التجربة المجانية</button>
+    <button class="tab" data-v="paid" type="button">دفعت؟ فعّل اشتراكك</button>
+  </div>
+
+  <!-- التجربة -->
+  <section id="vTrial">
+    <div style="display:grid;gap:8px;margin-bottom:18px;">
+      <h1>جرّب البرنامج 14 يوم مجانًا</h1>
+      <p class="lede">اكتب بياناتك وهتبدأ التجربة، والبرنامج هيفتح لوحده. مش محتاج تدفع حاجة دلوقتي.</p>
+    </div>
+    <form class="card" id="fTrial" novalidate>
+      <label><b>كود جهازك</b><input class="in dev" id="dev" name="dev" placeholder="WESO-XXXX-XXXX-XXXX-XXXX" maxlength="24" autocomplete="off" spellcheck="false"></label>
+      <label><b>اسمك</b><input class="in" id="name" name="name" maxlength="60" autocomplete="name" required></label>
+      <div class="row2">
+        <label><b>رقم الواتساب</b><input class="in ltr" id="phone" name="phone" maxlength="20" inputmode="tel" placeholder="01xxxxxxxxx" autocomplete="tel" required></label>
+        <label><b>حسابك على تيك توك</b><input class="in ltr" id="tiktok" name="tiktok" maxlength="40" placeholder="@username" autocomplete="off" spellcheck="false" required></label>
+      </div>
+      <label><b>الإيميل</b> (اختياري)<input class="in ltr" id="email" name="email" type="email" maxlength="80" autocomplete="email"></label>
+      <button class="btn" id="goTrial" type="submit">ابدأ التجربة المجانية</button>
+      <p class="hint">رقم الواتساب وحساب تيك توك هنحتاجهم لو نقلت ترخيصك لكمبيوتر جديد بعدين، فاكتبهم صح.</p>
+      <div class="msg" id="mTrial" role="status"></div>
+    </form>
+  </section>
+
+  <!-- دفعت -->
+  <section id="vPaid" hidden>
+    <div style="display:grid;gap:8px;margin-bottom:18px;">
+      <h1>دفعت؟ قولنا عشان نفعّلك</h1>
+      <p class="lede">اكتب الباقة وطريقة الدفع ورقم التحويل، وهنفعّل جهازك في أسرع وقت. البرنامج هيفتح لوحده بعد التفعيل.</p>
+    </div>
+    <form class="card" id="fPaid" novalidate>
+      <label><b>كود جهازك</b><input class="in dev" id="dev2" maxlength="24" autocomplete="off" spellcheck="false" placeholder="WESO-XXXX-XXXX-XXXX-XXXX"></label>
+      <div class="row2">
+        <label><b>الباقة</b><select class="in" id="plan"><option>سنة (عرض الإطلاق)</option><option>3 شهور</option><option>شهر</option></select></label>
+        <label><b>طريقة الدفع</b><select class="in" id="method"><option>إنستاباي</option><option>فودافون كاش</option><option>لينك الدعم</option></select></label>
+      </div>
+      <label><b>رقم التحويل أو اسم المحوّل</b> <small>(اختياري)</small><input class="in" id="ref" maxlength="60"></label>
+      <button class="btn" id="goPaid" type="submit">بلّغنا إنك دفعت</button>
+      <p class="hint">لو تقدر، ابعت صورة التحويل كمان على <a id="wa" target="_blank" rel="noopener" style="color:var(--violet2)">الواتساب</a> — بيسرّع التفعيل.</p>
+      <div class="msg" id="mPaid" role="status"></div>
+    </form>
+  </section>
+
+  <section id="vDone" class="card done" hidden aria-live="polite">
+    <span class="big">✓</span>
+    <h2 id="doneTitle">تمام! التجربة بدأت</h2>
+    <p class="lede" id="doneText">ارجع للبرنامج، هيفتح لوحده خلال ثواني.</p>
+  </section>
+
+  <p class="foot">محتاج مساعدة؟ <a id="wa2" target="_blank" rel="noopener">كلّمنا واتساب</a> · <a href="./">الصفحة الرئيسية</a></p>
+</div>
+
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const DEV_RE = /^WESO(-[0-9A-F]{4}){4}$/;
+  const fromApp = (new URLSearchParams(location.search).get('device') || '').toUpperCase();
+  if (DEV_RE.test(fromApp)) { $('dev').value = fromApp; $('dev').readOnly = true; $('dev2').value = fromApp; $('dev2').readOnly = true; }
+  if (new URLSearchParams(location.search).get('v') === 'paid') show('paid');
+  const wa = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent('عاوز أفعّل Weso Live Studio\nكود الجهاز: ' + (fromApp || ''))}`;
+  $('wa').href = wa; $('wa2').href = wa;
+
+  function show(v) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t.dataset.v === v));
+    $('vTrial').hidden = v !== 'trial';
+    $('vPaid').hidden = v !== 'paid';
+  }
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => show(t.dataset.v)));
+
+  function say(el, cls, text, small) { el.className = `msg on ${cls}`; el.innerHTML = ''; el.textContent = text; if (small) { const s = document.createElement('small'); s.textContent = small; el.appendChild(s); } }
+  // الرد المختوم: نقرا الحالة بس (التأكد من الختم بيحصل في البرنامج)
+  function statusOf(reply) {
+    try { return JSON.parse(decodeURIComponent(escape(atob(reply.payload)))).status; } catch (e) { return ''; }
+  }
+  async function post(body) {
+    const res = await fetch(SERVER_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) });
+    return res.json();
+  }
+  const ERR = {
+    need_name_phone: 'اكتب اسمك ورقم واتساب صحيح.',
+    bad_device: 'كود الجهاز مش صحيح. انسخه من البرنامج زي ما هو.',
+    busy: 'فيه زحمة دلوقتي، جرّب كمان شوية.',
+    server_not_ready: 'الخدمة لسه بتتجهّز، جرّب بعد دقيقة.'
+  };
+
+  $('fTrial').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const m = $('mTrial');
+    const dev = $('dev').value.trim().toUpperCase();
+    const name = $('name').value.trim(), phone = $('phone').value.trim(), tiktok = $('tiktok').value.trim().replace(/^@+/, '');
+    if (!DEV_RE.test(dev)) return say(m, 'bad', 'كود الجهاز مش صحيح.', 'افتح البرنامج ودوس "نسخ الكود" وألصقه هنا (بيبدأ بـ WESO-).');
+    if (name.length < 2) return say(m, 'bad', 'اكتب اسمك.');
+    if (phone.replace(/\D/g, '').length < 8) return say(m, 'bad', 'اكتب رقم واتساب صحيح.');
+    if (!tiktok) return say(m, 'bad', 'اكتب اسم حسابك على تيك توك.');
+    const b = $('goTrial'); b.disabled = true; say(m, '', 'ثانية...');
+    try {
+      const r = await post({ action: 'trial', deviceId: dev, name, phone, tiktok, email: $('email').value.trim(), version: 'site' });
+      if (!r || r.ok !== true) return say(m, 'bad', ERR[r && r.error] || 'حصلت مشكلة. جرّب تاني، ولو اتكررت كلّمنا واتساب (الرابط تحت).');
+      const st = statusOf(r);
+      if (st === 'trial') return done('تمام! التجربة بدأت', 'ارجع للبرنامج، هيفتح لوحده خلال ثواني. لو ما فتحش، دوس "تحقق تاني" في نافذة البرنامج. استمتع بـ 14 يوم مجانًا.');
+      if (st === 'active') return done('جهازك مفعّل أصلًا', 'ارجع للبرنامج، هيفتح لوحده.');
+      if (st === 'expired') { say(m, 'bad', 'التجربة المجانية اتستخدمت على الكمبيوتر ده قبل كده.', 'لو عاوز تكمّل، اشترك من الصفحة الرئيسية، وبعدها اضغط "دفعت؟" فوق.'); return; }
+      if (st === 'transferred') { say(m, 'bad', 'ترخيص الكمبيوتر ده اتنقل لكمبيوتر تاني.', 'لو ده غلط، كلّمنا واتساب.'); return; }
+      if (st === 'blocked') { say(m, 'bad', 'الجهاز ده موقوف.', 'كلّمنا واتساب.'); return; }
+      say(m, 'bad', 'حصلت مشكلة. جرّب تاني، ولو اتكررت كلّمنا واتساب (الرابط تحت).');
+    } catch (err) {
+      say(m, 'bad', 'مش قادرين نوصل للخدمة.', 'اتأكد من النت وجرّب تاني.');
+    } finally { b.disabled = false; }
+  });
+
+  $('fPaid').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const m = $('mPaid');
+    const dev = $('dev2').value.trim().toUpperCase();
+    if (!DEV_RE.test(dev)) return say(m, 'bad', 'كود الجهاز مش صحيح.', 'انسخه من البرنامج زي ما هو.');
+    const b = $('goPaid'); b.disabled = true; say(m, '', 'ثانية...');
+    try {
+      const r = await post({ action: 'paid', deviceId: dev, plan: $('plan').value, method: $('method').value, ref: $('ref').value.trim() });
+      if (!r || r.ok !== true) return say(m, 'bad', ERR[r && r.error] || 'حصلت مشكلة. جرّب تاني، ولو اتكررت كلّمنا واتساب (الرابط تحت).');
+      done('وصلنا! 🙌', 'هنراجع التحويل ونفعّل جهازك في أسرع وقت. البرنامج هيفتح لوحده أول ما يتفعّل (أو دوس "تحقق تاني" في نافذة البرنامج).');
+    } catch (err) {
+      say(m, 'bad', 'مش قادرين نوصل للخدمة.', 'اتأكد من النت وجرّب تاني، أو ابعتلنا على الواتساب.');
+    } finally { b.disabled = false; }
+  });
+
+  function done(title, text) {
+    $('doneTitle').textContent = title; $('doneText').textContent = text;
+    $('vTrial').hidden = true; $('vPaid').hidden = true; document.querySelector('.tabs').hidden = true;
+    $('vDone').hidden = false;
+  }
+})();
+</script>
+</body>
+</html>
