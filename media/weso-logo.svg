@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="512" height="512">
+  <title>Weso Live Studio</title>
+  <defs>
+    <linearGradient id="wesoG" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7c6cff"/>
+      <stop offset="1" stop-color="#ff3d7f"/>
+    </linearGradient>
+    <mask id="wesoCut" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="200">
+      <rect width="200" height="200" fill="#fff"/>
+      <path d="M40 72 L64 140 L88 92 L100 116 L112 92 L136 140 L160 72" fill="none" stroke="#000" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
+    </mask>
+  </defs>
+  <rect x="14" y="14" width="172" height="172" rx="48" fill="url(#wesoG)" mask="url(#wesoCut)"/>
+  <circle cx="156" cy="44" r="9" fill="#ff2d4a" stroke="#fff" stroke-width="3"/>
+</svg>
