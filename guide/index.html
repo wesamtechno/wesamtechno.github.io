@@ -24,6 +24,12 @@ header.top { position: sticky; top: 0; z-index: 20; background: rgba(7,8,12,.86)
 .brand small { display: block; color: var(--muted); font-weight: 500; font-size: 12px; line-height: 1.2; }
 .search { margin-inline-start: auto; position: relative; width: min(360px, 45vw); }
 .search input { width: 100%; padding: 9px 14px; border-radius: 10px; border: 1px solid var(--line2); background: #0c0d14; color: var(--ink); font: inherit; font-size: 14px; }
+.site-nav { display: flex; gap: 4px; flex: none; }
+header.top .brand { flex: none; white-space: nowrap; }
+.site-nav a { padding: 8px 12px; border-radius: 10px; color: var(--mut, #b9bdd0); text-decoration: none; font-size: 14px; font-weight: 700; white-space: nowrap; }
+.site-nav a:hover { background: rgba(255,255,255,.06); color: #fff; }
+@media (max-width: 960px) { .site-nav .more { display: none; } }
+@media (max-width: 640px) { header.top .in { flex-wrap: wrap; row-gap: 8px; height: auto; padding: 8px 0; } header.top .search { order: 3; flex: 1 1 100%; } }
 .btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 11px; border: 0; background: linear-gradient(135deg, var(--v), var(--p)); color: #fff; font: inherit; font-weight: 700; font-size: 14px; text-decoration: none; cursor: pointer; white-space: nowrap; }
 .btn.ghost { background: rgba(255,255,255,.06); border: 1px solid var(--line2); }
 .layout { width: min(1240px, 100% - 32px); margin: 0 auto; display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 36px; padding: 30px 0 80px; }
@@ -90,6 +96,7 @@ mark { background: rgba(255,204,77,.35); color: inherit; border-radius: 3px; }
 <header class="top">
   <div class="in">
     <a class="brand" href="../"><img src="../media/weso-logo.svg" alt="" width="34" height="34"><span>دليل الاستخدام<small>Weso Live Studio</small></span></a>
+    <nav class="site-nav no-print" aria-label="صفحات الموقع"><a href="../">→ الرئيسية</a><a class="more" href="../#features">المميزات</a><a class="more" href="../#pricing">الأسعار</a><a class="more" href="../#faq">الأسئلة</a></nav>
     <div class="search"><input id="q" type="search" placeholder="دوّر في الدليل… (مثلًا: OBS، أليرت، تحديث)" autocomplete="off"></div>
     <a class="btn pdf no-print" href="Weso-Live-Studio-Guide.pdf" download>⬇ <span>حمّل الدليل PDF</span></a>
   </div>
