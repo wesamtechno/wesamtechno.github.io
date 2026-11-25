@@ -7,8 +7,19 @@
 <meta name="description" content="برنامج عربي لصناع محتوى تيك توك لايف: أليرتات بتشتغل من جهازك من غير نت، ولوحة جانبية، وتحديات بالهدايا، ومتوصل بـ OBS. جرّبه مجانًا 14 يوم.">
 <meta property="og:title" content="Weso Live Studio — اللايف بتاعك يستاهل استوديو">
 <meta property="og:description" content="أليرتات ولوحة جانبية وتحديات بالهدايا لتيك توك لايف. جرّبه 14 يوم مجانًا.">
-<meta property="og:image" content="media/live-poster.jpg">
+<meta property="og:image" content="https://wesamtechno.github.io/media/live-poster.jpg">
 <meta name="theme-color" content="#07080c">
+<script>try{if(localStorage.getItem("weso_site_lang")==="en"&&!/[?&]lang=ar/.test(location.search))location.replace("en.html"+location.hash)}catch(e){}document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("[data-lang-to]");if(a)try{localStorage.setItem("weso_site_lang",a.getAttribute("data-lang-to"))}catch(x){}});</script>
+<meta name="keywords" content="برنامج أليرتات تيك توك, أليرتات تيك توك لايف, OBS تيك توك, لوحة جانبية للايف, تحدي الفرق بالهدايا, TikTok LIVE alerts, Weso Live Studio">
+<link rel="canonical" href="https://wesamtechno.github.io/">
+<link rel="alternate" hreflang="ar" href="https://wesamtechno.github.io/">
+<link rel="alternate" hreflang="en" href="https://wesamtechno.github.io/en.html">
+<link rel="alternate" hreflang="x-default" href="https://wesamtechno.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wesamtechno.github.io/">
+<meta property="og:locale" content="ar_EG">
+<meta property="og:site_name" content="Weso Live Studio">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="media/weso-logo.svg">
 <link rel="apple-touch-icon" href="media/weso-logo-256.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -86,7 +97,14 @@ nav.links a:hover { color: #fff; }
 .btn.ghost { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); }
 .btn.ghost:hover { background: rgba(255,255,255,.1); }
 .btn.big { padding: 16px 26px; font-size: 17px; border-radius: 16px; }
-@media (max-width: 860px) { nav.links { display: none; } .top .btn { margin-inline-start: auto; padding: 10px 14px; } }
+nav.links a, .brand span { white-space: nowrap; }
+@media (max-width: 1000px) { nav.links { display: none; } .top .btn { margin-inline-start: auto; padding: 10px 14px; } }
+.lang-sw { padding: 8px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,.14); color: var(--ink2); font-size: 14px; font-weight: 600; white-space: nowrap; transition: color .2s, border-color .2s; }
+.lang-sw:hover { color: #fff; border-color: rgba(255,255,255,.3); }
+@media (max-width: 1000px) { .top .lang-sw { margin-inline-start: auto; } .top .lang-sw + .btn { margin-inline-start: 0; } }
+.sup-card { display: block; transition: transform .2s, border-color .2s; }
+.sup-card:hover { transform: translateY(-3px); border-color: rgba(124,108,255,.45); }
+.faq details p a { color: #b9b0ff; text-decoration: underline; }
 
 /* ---------------- الهيرو ---------------- */
 .hero { position: relative; min-height: min(100vh, 900px); display: grid; align-items: center; overflow: hidden; padding: 40px 0 80px; }
@@ -322,8 +340,9 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: 
   <div class="wrap">
     <a class="brand" href="#"><img class="logo" src="media/weso-logo.svg" alt="" width="36" height="36"><span>Weso Live Studio<br><small>by Weso Gaming</small></span></a>
     <nav class="links" aria-label="أقسام الصفحة">
-      <a href="#demo">جرّبه</a><a href="#features">المميزات</a><a href="#gallery">من جوه البرنامج</a><a href="#pricing">الأسعار</a><a href="#faq">أسئلة</a><a href="guide/">الدليل</a>
+      <a href="#demo">جرّبه</a><a href="#features">المميزات</a><a href="#gallery">من جوه البرنامج</a><a href="#pricing">الأسعار</a><a href="#faq">أسئلة</a><a href="#support">الدعم</a><a href="guide/">الدليل</a>
     </nav>
+    <a class="lang-sw" href="en.html" hreflang="en" lang="en" data-lang-to="en">English</a>
     <a class="btn primary dl" href="#">حمّل مجانًا</a>
   </div>
 </header>
@@ -502,7 +521,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: 
         <h3>شهر</h3>
         <div class="price"><span class="ltr" data-p="month"></span><small data-unit></small></div>
         <div class="per">&nbsp;</div>
-        <ul><li>كل المميزات</li><li>جهاز واحد</li><li>التحديثات</li></ul>
+        <ul><li>كل المميزات</li><li>ترخيص لجهاز واحد</li><li>كل التحديثات طول الشهر</li></ul>
         <a class="btn ghost" href="#subscribe" data-plan="month" style="width:100%">اشترك شهر</a>
         <div class="plan-count" data-count-plan="month" hidden></div>
       </div>
@@ -513,7 +532,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: 
         <div class="old"><span class="ltr" data-p="year"></span> <span data-unit></span></div>
         <div class="per" data-per="year"></div>
         <span class="save" data-save="year"></span>
-        <ul><li>كل المميزات</li><li>جهاز واحد</li><li>كل التحديثات سنة كاملة</li><li>السعر ده لأول <span data-launch-limit></span> مشترك بس</li></ul>
+        <ul><li>كل المميزات</li><li>ترخيص لجهاز واحد</li><li>كل التحديثات سنة كاملة</li><li>السعر ده لأول <span data-launch-limit></span> مشترك بس</li></ul>
         <a class="btn primary" href="#subscribe" data-plan="launchYear" style="width:100%">اشترك سنة</a>
         <div class="launch-left" id="launchLeft" hidden></div>
         <div class="plan-count" data-count-plan="year" hidden></div>
@@ -523,13 +542,13 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: 
         <div class="price"><span class="ltr" data-p="quarter"></span><small data-unit></small></div>
         <div class="per" data-per="quarter"></div>
         <span class="save" data-save="quarter"></span>
-        <ul><li>كل المميزات</li><li>جهاز واحد</li><li>التحديثات</li></ul>
+        <ul><li>كل المميزات</li><li>ترخيص لجهاز واحد</li><li>كل التحديثات طول التلات شهور</li></ul>
         <a class="btn ghost" href="#subscribe" data-plan="quarter" style="width:100%">اشترك 3 شهور</a>
         <div class="plan-count" data-count-plan="quarter" hidden></div>
       </div>
     </div>
-    <p class="price-note reveal">جرّب البرنامج كامل 14 يوم مجانًا الأول. اشترك بس لو عجبك، وإعداداتك وأليرتاتك كلها بتفضل زي ما هي.</p>
-    <p class="usd-note" id="usdNote" hidden>برّه مصر؟ كلّمنا على الواتساب وهنبعتلك طريقة دفع تناسب بلدك.</p>
+    <p class="price-note reveal">جرّب البرنامج كامل 14 يوم مجانًا الأول. اشترك بس لو عجبك.<br>لما الاشتراك يخلص البرنامج بيقف لحد ما تجدّد (عمره ما بيقف وانت لايف)، وإعداداتك وأليرتاتك كلها بتفضل زي ما هي.</p>
+    <p class="usd-note" id="usdNote" hidden>أسعار الدولار تقريبية. برّه مصر؟ كلّمنا على الواتساب وهنبعتلك طريقة دفع تناسب بلدك.</p>
   </div>
 </section>
 
@@ -568,9 +587,41 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: 
       <details class="reveal"><summary>إزاي الأليرتات ما بتاخدش نت؟</summary><p>فيديوهات الأليرتات متخزّنة على جهازك، والبرنامج بيعرضها لـ OBS من جوه نفس الجهاز. اللي بييجي من النت هو بيانات اللايف نفسها (مين بعت هدية مثلًا)، ودي حاجة صغيرة جدًا.</p></details>
       <details class="reveal"><summary>لو غيّرت الويندوز، هدفع تاني؟</summary><p>لأ. كود جهازك متاخد من الجهاز نفسه، فلما تسطّب البرنامج تاني الاشتراك بيرجع لوحده.</p></details>
       <details class="reveal"><summary>غيّرت الكمبيوتر كله، أعمل إيه؟</summary><p>من البرنامج على الكمبيوتر الجديد دوس "نقل الترخيص"، واكتب رقم الواتساب وحساب تيك توك اللي سجّلت بيهم. الترخيص بيتنقل لوحده (مرة كل 30 يوم).</p></details>
-      <details class="reveal"><summary>بيشتغل مع أنهي برامج بث؟</summary><p>بيشتغل مع OBS وStreamlabs: كل طبقة ليها رابط بتحطه Browser Source. برنامج تيك توك الرسمي للبث بنجرّبه دلوقتي، وهنكتب هنا أول ما يتأكد.</p></details>
+      <details class="reveal"><summary>بيشتغل مع أنهي برامج بث؟</summary><p>بيشتغل مع OBS وStreamlabs: كل طبقة ليها رابط بتحطه Browser Source. وبرنامج تيك توك الرسمي للبث (TikTok LIVE Studio): الروابط بقت بتفتح فيه من نسخة 1.6. لو قابلتك أي مشكلة فيه كلّمنا.</p></details>
       <details class="reveal"><summary>التفعيل بياخد قد إيه بعد الدفع؟</summary><p>غالبًا في نفس اليوم. ولو جدّدت والاشتراك لسه شغال، الأيام الجديدة بتتزوّد على اللي فاضل.</p></details>
+      <details class="reveal"><summary>البرنامج آمن على حسابي في تيك توك؟</summary><p>آه. البرنامج بيقرا أحداث اللايف العامة بس (الهدايا والشات والفولو)، ومش بيطلب الباسورد بتاعك خالص، ومش بيكتب أي حاجة في الشات بالنيابة عنك.</p></details>
+      <details class="reveal"><summary>أقدر أستخدم فيديوهاتي وأصواتي؟</summary><p>آه. اربط فولدر الأليرتات بتاعك في "المعرض"، واختار لكل هدية أو حدث الفيديو أو الصوت أو الصورة اللي عاوزها. البرنامج بيشغّلها من مكانها على جهازك.</p></details>
+      <details class="reveal"><summary>البرنامج فيه إنجليزي؟</summary><p>آه. من الإعدادات ← اللغة تختار عربي أو English للبرنامج، ولصفحات OBS لوحدها. يعني ممكن البرنامج يبقى إنجليزي والبث عربي، أو العكس.</p></details>
+      <details class="reveal"><summary>لو حصلت مشكلة أعمل إيه؟</summary><p>افتح "جاهز للايف؟" في لوحة اللايف، هيقولك إيه الناقص. ولو لسه، بص على جزء <a href="guide/#trouble">"عندي مشكلة"</a> في الدليل، أو كلّمنا على الواتساب.</p></details>
       <details class="reveal"><summary>ينفع أدفع من برّه مصر؟</summary><p>آه. اختار "دولار" في الأسعار، وكلّمنا على الواتساب وهنبعتلك طريقة دفع تناسب بلدك.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== آراء الستريمرز ======================
+     القسم ده مستخبي لحد ما توصلنا آراء حقيقية من ستريمرز (بإذنهم). ممنوع آراء مألّفة.
+     لما يوصل رأي: شيل hidden، وحط كل رأي كده:
+     <figure class="quote reveal"><blockquote>الرأي</blockquote><figcaption>الاسم · حساب تيك توك</figcaption></figure> -->
+<section class="block" id="reviews" hidden>
+  <div class="wrap">
+    <div class="center"><div class="kicker reveal">FROM STREAMERS</div><h2 class="title reveal">قالوا عن البرنامج</h2></div>
+    <div class="quotes"></div>
+  </div>
+</section>
+
+<!-- ====================== الدعم ====================== -->
+<section class="block" id="support">
+  <div class="wrap">
+    <div class="center">
+      <div class="kicker reveal">SUPPORT</div>
+      <h2 class="title reveal">محتاج مساعدة؟</h2>
+      <p class="sub reveal">إحنا معاك من أول التسطيب لحد ما تطلع لايف.</p>
+    </div>
+    <div class="perks">
+      <a class="perk reveal sup-card" id="supWa" target="_blank" rel="noopener"><b>💬 واتساب</b><p>كلّمنا مباشرة في أي سؤال أو مشكلة.</p></a>
+      <a class="perk reveal sup-card" href="guide/"><b>📖 دليل الاستخدام</b><p>كل جزء في البرنامج بالصور، خطوة بخطوة.</p></a>
+      <a class="perk reveal sup-card dl" href="#"><b>⬇ تحميل البرنامج</b><p>آخر نسخة، ويندوز 10 و 11.</p></a>
+      <a class="perk reveal sup-card" href="guide/#trouble"><b>🛠️ حل المشاكل</b><p>الأليرت ما ظهرش؟ الصفحة فاضية في OBS؟ الحل هنا.</p></a>
     </div>
   </div>
 </section>
@@ -605,6 +656,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: 
   $$('.dl').forEach(a => { a.href = SITE.downloadUrl; });
   $('#waFloat').href = wa('عاوز أسأل عن Weso Live Studio');
   $('#footWa').href = wa('');
+  $('#supWa').href = wa('محتاج مساعدة في Weso Live Studio');
   $('#ipay').textContent = SITE.instapay;
   $('#wallet').textContent = SITE.wallet;
   $('#walletName').textContent = SITE.walletName;
