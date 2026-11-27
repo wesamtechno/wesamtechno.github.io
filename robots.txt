@@ -3,4 +3,4 @@ Allow: /
 Disallow: /index-old-2026-11.html
 Disallow: /next/
 
-Sitemap: https://wesamtechno.github.io/sitemap.xml
+Sitemap: https://weso.live/sitemap.xml
