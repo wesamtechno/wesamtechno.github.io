@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Weso Live Studio | TikTok LIVE studio for streamers</title>
+<title>TikTok LIVE Alerts & Overlays for OBS | Weso Live Studio</title>
 <meta name="description" content="TikTok LIVE alerts that run from your own PC with zero internet, a live sidebar, gift battles and a quiz game, all connected to OBS. Free 14-day trial.">
 <meta property="og:title" content="Weso Live Studio — your LIVE deserves a real studio">
 <meta property="og:description" content="Alerts, a live sidebar and gift battles for TikTok LIVE. Try it free for 14 days.">
@@ -114,7 +114,22 @@ nav.links a:hover { color: #fff; }
 .btn.ghost:hover { background: rgba(255,255,255,.1); }
 .btn.big { padding: 16px 26px; font-size: 17px; border-radius: 16px; }
 nav.links a, .brand span { white-space: nowrap; }
-@media (max-width: 1000px) { nav.links { display: none; } .top .btn { margin-inline-start: auto; padding: 10px 14px; } }
+.menu-btn { display: none; width: 42px; height: 42px; flex: none; border-radius: 12px; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.05); color: #fff; cursor: pointer; place-items: center; align-content: center; gap: 4px; padding: 0; }
+.menu-btn i { display: block; width: 18px; height: 2px; border-radius: 2px; background: currentColor; transition: transform .25s, opacity .2s; }
+header.top.open .menu-btn i:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+header.top.open .menu-btn i:nth-child(2) { opacity: 0; }
+header.top.open .menu-btn i:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+@media (max-width: 1000px) {
+  .menu-btn { display: grid; }
+  nav.links { display: none; position: absolute; top: calc(100% + 8px); inset-inline: 12px; margin: 0; flex-direction: column; gap: 2px; padding: 10px; border-radius: 18px; background: #10111a; border: 1px solid rgba(124,108,255,.35); box-shadow: 0 24px 60px -12px rgba(0,0,0,.8), 0 0 40px -10px rgba(124,108,255,.5); font-size: 17px; }
+  header.top.open nav.links { display: flex; animation: menuIn .22s ease-out; }
+  nav.links a { padding: 13px 16px; border-radius: 12px; color: var(--ink); }
+  nav.links a:hover, nav.links a:focus-visible { background: rgba(124,108,255,.16); }
+  .top .btn { margin-inline-start: auto; padding: 10px 14px; }
+}
+@keyframes menuIn { from { opacity: 0; transform: translateY(-8px); } }
+@media (max-width: 420px) { .top .wrap { gap: 10px; } .brand span { display: none; } .top .lang-sw { padding: 7px 9px; font-size: 13px; } .top .btn.dl { padding: 9px 11px; font-size: 14px; } }
+.h1-kw { display: block; margin-bottom: 14px; font-family: var(--ui); font-size: clamp(15px, 1.5vw, 19px); font-weight: 700; letter-spacing: 0; line-height: 1.5; color: var(--violet2); }
 .lang-sw { padding: 8px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,.14); color: var(--ink2); font-size: 14px; font-weight: 600; white-space: nowrap; transition: color .2s, border-color .2s; }
 .lang-sw:hover { color: #fff; border-color: rgba(255,255,255,.3); }
 @media (max-width: 1000px) { .top .lang-sw { margin-inline-start: auto; } .top .lang-sw + .btn { margin-inline-start: 0; } }
@@ -361,12 +376,13 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: 
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#"><img class="logo" src="media/weso-logo.svg" alt="" width="36" height="36"><span>Weso Live Studio<br><small>by Weso Gaming</small></span></a>
-    <nav class="links" aria-label="Page sections">
+    <a class="brand" href="#top" aria-label="Weso Live Studio: back to top"><img class="logo" src="media/weso-logo.svg" alt="" width="36" height="36"><span>Weso Live Studio<br><small>by Weso Gaming</small></span></a>
+    <nav class="links" id="siteNav" aria-label="Page sections">
       <a href="#demo">Demo</a><a href="#features">Features</a><a href="#gallery">Inside the app</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="#support">Support</a><a href="guide/">Guide</a>
     </nav>
     <a class="lang-sw" href="./" hreflang="ar" lang="ar" data-lang-to="ar">العربية</a>
     <a class="btn primary dl" href="#">Download free</a>
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="siteNav"><i></i><i></i><i></i></button>
   </div>
 </header>
 
@@ -377,7 +393,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: 
   <div class="wrap">
     <div class="reveal in">
       <span class="onair"><i></i> ON AIR · TIKTOK LIVE</span>
-      <h1 class="big">Your LIVE<br>deserves a real<br><span class="grad">studio</span>.</h1>
+      <h1 class="big"><span class="h1-kw">TikTok LIVE alerts and overlays for OBS</span>Your LIVE<br>deserves a real<br><span class="grad">studio</span>.</h1>
       <p class="lede">Alerts, a live sidebar, gift battles and a quiz game, all running from your own PC and connected to OBS. Made by a streamer, for streamers.</p>
       <div class="cta-row">
         <a class="btn primary big dl" href="#">⬇ Download — free for 14 days</a>
@@ -541,7 +557,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: 
     <div class="steps">
       <div class="step reveal"><h3>Download the app</h3><p>Install it on Windows, enter your name and WhatsApp number, and the trial starts right away.</p></div>
       <div class="step reveal"><h3>Connect your TikTok</h3><p>Type your username, and the app connects by itself as soon as you go LIVE.</p></div>
-      <div class="step reveal"><h3>Add the links to OBS</h3><p>Copy each layer link as a Browser Source, set up your alerts with your own videos, and go LIVE.</p></div>
+      <div class="step reveal"><h3>Add the links to OBS</h3><p>Copy each layer link and add it in OBS as a Browser Source, set up your alerts with your own videos, and go LIVE.</p></div>
     </div>
   </div>
 </section>
@@ -602,7 +618,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: 
         <div><em>1</em><span><b>Copy your device code</b><p>It's shown in the app. If you came from the app, it's already filled in here.</p></span></div>
         <div><em>2</em><span><b>Pay for your plan</b><p>Via InstaPay, mobile wallet or the support link.</p></span></div>
         <div><em>3</em><span><b>Tell us you paid</b><p>Use the "Tell us" button or send the payment screenshot on WhatsApp.</p></span></div>
-        <div><em>4</em><span><b>The app unlocks by itself</b><p>As soon as we activate you. Or press "Check again" in the app.</p></span></div>
+        <div><em>4</em><span><b>The app unlocks by itself</b><p>As soon as we activate you, usually the same day. Or press "Check again" in the app.</p></span></div>
       </div>
       <div class="payform reveal">
         <label>Your device code<input class="field ltr" id="dev" placeholder="WESO-XXXX-XXXX-XXXX-XXXX" maxlength="24"></label>
@@ -639,15 +655,9 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: 
 </section>
 
 <!-- ====================== آراء الستريمرز ======================
-     القسم ده مستخبي لحد ما توصلنا آراء حقيقية من ستريمرز (بإذنهم). ممنوع آراء مألّفة.
-     لما يوصل رأي: شيل hidden، وحط كل رأي كده:
-     <figure class="quote reveal"><blockquote>الرأي</blockquote><figcaption>الاسم · حساب تيك توك</figcaption></figure> -->
-<section class="block" id="reviews" hidden>
-  <div class="wrap">
-    <div class="center"><div class="kicker reveal">FROM STREAMERS</div><h2 class="title reveal">What streamers say</h2></div>
-    <div class="quotes"></div>
-  </div>
-</section>
+     اتشال لحد ما توصلنا آراء حقيقية من ستريمرز (بإذنهم). ممنوع آراء مألّفة.
+     لما يوصل رأي: رجّع قسم section class="block" id="reviews" قبل قسم الدعم، وحط كل رأي كده:
+     figure class="quote reveal" > blockquote (الرأي) + figcaption (الاسم · حساب تيك توك) -->
 
 <!-- ====================== الدعم ====================== -->
 <section class="block" id="support">
@@ -700,6 +710,13 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: 
   $('#waFloat').href = wa('Hi, I have a question about Weso Live Studio');
   $('#footWa').href = wa('');
   $('#supWa').href = wa('Hi, I need help with Weso Live Studio');
+  // قايمة الموبايل
+  const topBar = $('header.top'), menuBtn = $('#menuBtn');
+  const setMenu = (open) => { topBar.classList.toggle('open', open); menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false'); };
+  menuBtn.addEventListener('click', (e) => { e.stopPropagation(); setMenu(!topBar.classList.contains('open')); });
+  $$('#siteNav a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('click', (e) => { if (!topBar.contains(e.target)) setMenu(false); });
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
   const tg = 'https://t.me/' + SITE.telegramBot;
   ['#tgFloat', '#supTg', '#footTg'].forEach(id => { $(id).href = tg; });
   $('#ipay').textContent = SITE.instapay;
